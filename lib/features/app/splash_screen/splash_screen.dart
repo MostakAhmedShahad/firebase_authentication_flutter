@@ -13,6 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     Future.delayed(Duration(seconds: 3),
     (){
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> login), predicate)
       
     }
     );
@@ -26,8 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
         title: Text('Appbar'),
       ),
       body: Center(
-        child: Text('welcome to firebase'),
-      ),
+        child: Text('welcome to firebase',style: TextStyle(color: Colors.blue,fontWeight:  FontWeight.bold),),
+      ), 
     );
   }
 }
