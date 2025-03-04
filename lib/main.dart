@@ -1,4 +1,5 @@
 import 'package:firebase_authentication_flutter/features/app/splash_screen/splash_screen.dart';
+import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,18 @@ Future main() async {
             messagingSenderId: "1005179153071",
             projectId: "flutter-firebase-a72d0"));
   }
-  runApp(const SplashScreen());
+  runApp(MyApp());
 }
- 
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Firebase app',
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(
+        child: LoginPage(),
+      ),
+    );
+  }
+}
