@@ -1,9 +1,26 @@
 import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController _nameEditingController =TextEditingController();
+  TextEditingController _emaiEditingController =TextEditingController();
+  TextEditingController _passwordEditingController =TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _nameEditingController.dispose();
+    _emaiEditingController.dispose();
+    _passwordEditingController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
