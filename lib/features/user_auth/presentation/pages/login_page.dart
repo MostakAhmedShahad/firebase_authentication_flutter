@@ -1,3 +1,4 @@
+import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -49,9 +50,12 @@ class LoginPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
                   child: Text(
                     'Log in ',
-                    style: TextStyle(color: Colors.blue, fontSize: 20),
+                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.w300, fontSize: 20),
                   ),
                   onPressed: () {
                     print('Successfully log in ');
@@ -78,8 +82,8 @@ class LoginPage extends StatelessWidget {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
-                              (route) => false);
+                                  builder: (context) => SignUpPage()),
+                              (route) => true);
                         },
                         child: Text(
                           'Sign up...',

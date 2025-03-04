@@ -1,7 +1,8 @@
+import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,31 +11,43 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
+            const Center(
                 child: Text(
-              'Login',
+              'Fill the information',
               style: TextStyle(
                   fontSize: 30,
                   color: Colors.black,
                   fontWeight: FontWeight.bold),
             )),
-            SizedBox(
+           const SizedBox(
               height: 20,
             ),
-            Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+            const Padding(
+              
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Phone number, email or username',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+                    labelText: 'Username',
+                    hintText: 'Enter user name'),
               ),
             ),
-            Padding(
+           const Padding(
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
-              //padding: EdgeInsets.symmetric(horizontal: 15),
+              
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                    hintText: 'Enter email address'),
+              ),
+            ),
+            const Padding(
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
+              
               child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -43,15 +56,23 @@ class LoginPage extends StatelessWidget {
                     hintText: 'Enter secure password'),
               ),
             ),
-            SizedBox(
+            
+            
+
+             SizedBox(
               height: 90,
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
-                  child: Text(
-                    'Log in ',
-                    style: TextStyle(color: Colors.blue, fontSize: 20),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  
+                  child: const Text(
+                    'Sign up ',
+                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.w300, fontSize: 20),
+                    
                   ),
                   onPressed: () {
                     print('Successfully log in ');
@@ -59,7 +80,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Container(
@@ -67,18 +88,22 @@ class LoginPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 62),
-                    child: Text('Do not have account? '),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 62),
+                    child: Text('Already have account? '),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 1.0),
                     child: InkWell(
                         onTap: () {
-                          print('hello');
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()),
+                              (route) => true);
                         },
-                        child: Text(
-                          'Sign up...',
+                        child: const Text(
+                          'Sign in...',
                           style: TextStyle(fontSize: 14, color: Colors.blue),
                         )),
                   )
