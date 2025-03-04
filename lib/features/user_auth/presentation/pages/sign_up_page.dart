@@ -75,11 +75,7 @@ class LoginPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 1.0),
                     child: InkWell(
                         onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
-                              (route) => false);
+                          print('hello');
                         },
                         child: Text(
                           'Sign up...',
