@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authentication_flutter/features/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
+import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/home_page.dart';
 import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +12,10 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  TextEditingController _nameEditingController =TextEditingController();
-  TextEditingController _emaiEditingController =TextEditingController();
-  TextEditingController _passwordEditingController =TextEditingController();
+  final FirebaseAuthServices _auth = FirebaseAuthServices();
+  TextEditingController _nameEditingController = TextEditingController();
+  TextEditingController _emaiEditingController = TextEditingController();
+  TextEditingController _passwordEditingController = TextEditingController();
 
   @override
   void dispose() {
@@ -21,6 +25,24 @@ class _SignUpPageState extends State<SignUpPage> {
     _passwordEditingController.dispose();
     super.dispose();
   }
+
+  void _signUp() async {
+    String username = _nameEditingController.text;
+    String email = _emaiEditingController.text;
+    String password = _passwordEditingController.text;
+    User? user = await _auth.signUpWithEmailAndPassword(email, password);
+    if (user != null) {
+      print('User is successfully created');
+      // Navigator.pushNamed(context, "/home");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } else {
+      print('Some error occured');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,36 +58,36 @@ class _SignUpPageState extends State<SignUpPage> {
                   color: Colors.black,
                   fontWeight: FontWeight.bold),
             )),
-           const SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            const Padding(
-              
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: _nameEditingController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Username',
                     hintText: 'Enter user name'),
               ),
             ),
-           const Padding(
+            Padding(
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
-              
               child: TextField(
+                controller: _emaiEditingController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'Enter email address'),
               ),
             ),
-            const Padding(
+            Padding(
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
-              
               child: TextField(
+                controller: _passwordEditingController,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -73,27 +95,24 @@ class _SignUpPageState extends State<SignUpPage> {
                     hintText: 'Enter secure password'),
               ),
             ),
-            
-            
-
-             SizedBox(
+            SizedBox(
               height: 90,
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
                   ),
-                  
                   child: const Text(
                     'Sign up ',
-                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.w300, fontSize: 20),
-                    
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 20),
                   ),
-                  onPressed: () {
-                    print('Successfully log in ');
-                  },
+                  onPressed: _signUp,
                 ),
               ),
             ),
@@ -113,7 +132,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     padding: const EdgeInsets.only(left: 1.0),
                     child: InkWell(
                         onTap: () {
-                            Navigator.pushAndRemoveUntil(
+                          Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => LoginPage()),
