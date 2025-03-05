@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_authentication_flutter/features/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/home_page.dart';
 import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/sign_up_page.dart';
+import 'package:firebase_authentication_flutter/global/common/toust.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -50,14 +52,14 @@ class _LoginPageState extends State<LoginPage> {
     });
     
     if (user != null) {
-      print('User is successfully created');
+      showToast(message:'User is successfully login');
       // Navigator.pushNamed(context, "/home");
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
       );
     } else {
-      print('Some error occured');
+      showToast(message: 'Some error occured');
     }
   }
   @override
@@ -116,6 +118,28 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(color: Colors.black,fontWeight: FontWeight.w300, fontSize: 20),
                   ),
                   onPressed: isLoading? null: _signIn,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 90,
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  child:  Row(
+                    children: [
+                      Icon(FontAwesomeIcons.google),
+                      Text(
+                        'Signin With google ',
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.w300, fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  onPressed:(){} ,
                 ),
               ),
             ),

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_authentication_flutter/features/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/home_page.dart';
 import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/login_page.dart';
+import 'package:firebase_authentication_flutter/global/common/toust.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -43,14 +44,14 @@ class _SignUpPageState extends State<SignUpPage> {
       isLoading = false;
     });
     if (user != null) {
-      print('User is successfully created');
+      showToast(message: 'User is successfully created');
       // Navigator.pushNamed(context, "/home");
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
       );
     } else {
-      print('Some error occured');
+      showToast(message: 'Some error occured');
     }
   }
 
