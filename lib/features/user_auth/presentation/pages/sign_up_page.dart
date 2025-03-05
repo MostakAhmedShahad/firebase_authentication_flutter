@@ -16,6 +16,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController _nameEditingController = TextEditingController();
   TextEditingController _emaiEditingController = TextEditingController();
   TextEditingController _passwordEditingController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -30,7 +31,17 @@ class _SignUpPageState extends State<SignUpPage> {
     String username = _nameEditingController.text;
     String email = _emaiEditingController.text;
     String password = _passwordEditingController.text;
+    if (email.isEmpty || password.isEmpty) {
+      print("Email or password cannot be empty");
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
     User? user = await _auth.signUpWithEmailAndPassword(email, password);
+    setState(() {
+      isLoading = false;
+    });
     if (user != null) {
       print('User is successfully created');
       // Navigator.pushNamed(context, "/home");
@@ -105,14 +116,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.blue),
                   ),
-                  child: const Text(
+                  child:  isLoading? CircularProgressIndicator(color: Colors.white,): Text(
                     'Sign up ',
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w300,
                         fontSize: 20),
                   ),
-                  onPressed: _signUp,
+                  onPressed: isLoading? null: _signUp,
                 ),
               ),
             ),
