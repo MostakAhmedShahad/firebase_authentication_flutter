@@ -16,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
    
   TextEditingController _emaiEditingController = TextEditingController();
   TextEditingController _passwordEditingController = TextEditingController();
+  bool isLoading=false;
 
   @override
   void dispose() {
@@ -27,10 +28,27 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _signIn() async {
+
+    setState(() {
+      isLoading=true;
+    });
    
-    String email = _emaiEditingController.text;
-    String password = _passwordEditingController.text;
+    String email = _emaiEditingController.text.trim();
+    String password = _passwordEditingController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      print("Email or password cannot be empty");
+      setState(() {
+        isLoading = false;  
+      });
+      return;
+    }
     User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+    setState(() {
+      isLoading=false;
+    });
+    
     if (user != null) {
       print('User is successfully created');
       // Navigator.pushNamed(context, "/home");
@@ -64,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: _emaiEditingController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Phone number, email or username',
@@ -75,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: _passwordEditingController,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -91,11 +111,11 @@ class _LoginPageState extends State<LoginPage> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                   ),
-                  child: Text(
+                  child: isLoading? CircularProgressIndicator(color: Colors.white,) : Text(
                     'Log in ',
                     style: TextStyle(color: Colors.black,fontWeight: FontWeight.w300, fontSize: 20),
                   ),
-                  onPressed:  _signIn,
+                  onPressed: isLoading? null: _signIn,
                 ),
               ),
             ),
