@@ -76,7 +76,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextField(
                 controller: _emaiEditingController,
-                obscureText: true,
+                obscureText: false,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
