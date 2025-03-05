@@ -1,9 +1,47 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authentication_flutter/features/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
+import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/home_page.dart';
 import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuthServices _auth = FirebaseAuthServices();
+   
+  TextEditingController _emaiEditingController = TextEditingController();
+  TextEditingController _passwordEditingController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+     
+    _emaiEditingController.dispose();
+    _passwordEditingController.dispose();
+    super.dispose();
+  }
+
+  void _signIn() async {
+   
+    String email = _emaiEditingController.text;
+    String password = _passwordEditingController.text;
+    User? user = await _auth.signInWithEmailAndPassword(email, password);
+    if (user != null) {
+      print('User is successfully created');
+      // Navigator.pushNamed(context, "/home");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } else {
+      print('Some error occured');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,9 +95,7 @@ class LoginPage extends StatelessWidget {
                     'Log in ',
                     style: TextStyle(color: Colors.black,fontWeight: FontWeight.w300, fontSize: 20),
                   ),
-                  onPressed: () {
-                    print('Successfully log in ');
-                  },
+                  onPressed:  _signIn,
                 ),
               ),
             ),
