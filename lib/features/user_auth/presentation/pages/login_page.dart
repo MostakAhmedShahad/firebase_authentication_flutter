@@ -128,14 +128,16 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                   ),
                   child:  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(FontAwesomeIcons.google),
+                      Icon(FontAwesomeIcons.google,color: Colors.white,),
+                      SizedBox( width: 5),
                       Text(
-                        'Signin With google ',
-                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.w300, fontSize: 20),
+                        'Sign in With google ',
+                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.w300, fontSize: 20),
                       ),
                     ],
                   ),
