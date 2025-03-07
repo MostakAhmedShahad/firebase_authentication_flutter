@@ -65,7 +65,11 @@ class _LoginPageState extends State<LoginPage> {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   _signInWithGoogle() async {
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    final GoogleSignIn _googleSignIn = GoogleSignIn(
+      //clientId: '964865312791-c9nmbie71kudur3dqrglosas85soq0go.apps.googleusercontent.com' 1005179153071-23jm0ht66df87qfd26oupmod50qhd4hm.apps.googleusercontent.com
+      clientId: ' 1005179153071-23jm0ht66df87qfd26oupmod50qhd4hm.apps.googleusercontent.com'
+                 
+    );
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
