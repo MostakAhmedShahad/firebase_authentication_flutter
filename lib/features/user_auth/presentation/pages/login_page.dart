@@ -5,6 +5,7 @@ import 'package:firebase_authentication_flutter/features/user_auth/presentation/
 import 'package:firebase_authentication_flutter/global/common/toust.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,44 +16,43 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final FirebaseAuthServices _auth = FirebaseAuthServices();
-   
+
   TextEditingController _emaiEditingController = TextEditingController();
   TextEditingController _passwordEditingController = TextEditingController();
-  bool isLoading=false;
+  bool isLoading = false;
 
   @override
   void dispose() {
     // TODO: implement dispose
-     
+
     _emaiEditingController.dispose();
     _passwordEditingController.dispose();
     super.dispose();
   }
 
   void _signIn() async {
-
     setState(() {
-      isLoading=true;
+      isLoading = true;
     });
-   
+
     String email = _emaiEditingController.text.trim();
     String password = _passwordEditingController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
       print("Email or password cannot be empty");
       setState(() {
-        isLoading = false;  
+        isLoading = false;
       });
       return;
     }
     User? user = await _auth.signInWithEmailAndPassword(email, password);
 
     setState(() {
-      isLoading=false;
+      isLoading = false;
     });
-    
+
     if (user != null) {
-      showToast(message:'User is successfully login');
+      showToast(message: 'User is successfully login');
       // Navigator.pushNamed(context, "/home");
       Navigator.push(
         context,
@@ -62,6 +62,33 @@ class _LoginPageState extends State<LoginPage> {
       showToast(message: 'Some error occured');
     }
   }
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  _signInWithGoogle() async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken,
+        );
+        await _firebaseAuth.signInWithCredential(credential);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      }
+    } catch (e) {
+      showToast(message: "some erroe occuredd $e");
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,13 +138,21 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
                   ),
-                  child: isLoading? CircularProgressIndicator(color: Colors.white,) : Text(
-                    'Log in ',
-                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.w300, fontSize: 20),
-                  ),
-                  onPressed: isLoading? null: _signIn,
+                  child: isLoading
+                      ? CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : Text(
+                          'Log in ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 20),
+                        ),
+                  onPressed: isLoading ? null : _signIn,
                 ),
               ),
             ),
@@ -128,20 +163,27 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.red),
                   ),
-                  child:  Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(FontAwesomeIcons.google,color: Colors.white,),
-                      SizedBox( width: 5),
+                      Icon(
+                        FontAwesomeIcons.google,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 5),
                       Text(
                         'Sign in With google ',
-                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.w300, fontSize: 20),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 20),
                       ),
                     ],
                   ),
-                  onPressed:(){} ,
+                  onPressed:_signInWithGoogle(),
                 ),
               ),
             ),
