@@ -66,10 +66,9 @@ class _LoginPageState extends State<LoginPage> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   _signInWithGoogle() async {
     final GoogleSignIn _googleSignIn = GoogleSignIn(
-      //clientId: '964865312791-c9nmbie71kudur3dqrglosas85soq0go.apps.googleusercontent.com' 1005179153071-23jm0ht66df87qfd26oupmod50qhd4hm.apps.googleusercontent.com
-      clientId: ' 1005179153071-23jm0ht66df87qfd26oupmod50qhd4hm.apps.googleusercontent.com'
-                 
-    );
+        //clientId: '964865312791-c9nmbie71kudur3dqrglosas85soq0go.apps.googleusercontent.com' 1005179153071-23jm0ht66df87qfd26oupmod50qhd4hm.apps.googleusercontent.com
+        clientId:
+            '1005179153071-23jm0ht66df87qfd26oupmod50qhd4hm.apps.googleusercontent.com');
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
@@ -164,32 +163,32 @@ class _LoginPageState extends State<LoginPage> {
               height: 90,
               width: double.infinity,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.red),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.google,
-                        color: Colors.white,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Sign in With google ',
-                        style: TextStyle(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.google,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Sign in With Google',
+                          style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w300,
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
-                  onPressed:_signInWithGoogle(),
-                ),
-              ),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                    onPressed: isLoading ? null : _signInWithGoogle,
+                  )),
             ),
             SizedBox(
               height: 50,
