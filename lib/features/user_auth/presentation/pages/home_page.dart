@@ -16,30 +16,51 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Center(child: Text('Welcome')),
       ),
-      body: Center(
-        child: GestureDetector(
-          onTap: () {
-            _createData(UserModel(
-              username: "shahad",
-              age: 26,
-              address: "dhaka",
-            ));
-          },
-          child: Container(
-            height: 200,
-            width: 150,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              'Tap to Add Data',
-              style: TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.center,
+      body: Column(
+        children: [
+          GestureDetector(
+            onTap: () {
+              _createData(UserModel(
+                username: "shahad",
+                age: 26,
+                address: "dhaka",
+              ));
+            },
+            child: Container(
+              height: 80,
+              width: 50,
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                'Tap to Add Data',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-        ),
+
+          SizedBox(height: 18,),
+          Padding(padding: EdgeInsets.all(18),
+          child: Column(
+            children: [
+              ListTile(
+                leading: GestureDetector(
+                  child: Icon(Icons.delete),
+                ),
+                trailing: GestureDetector(
+                  child: Icon(Icons.update),
+                ),
+                title: Text(' username'),
+                subtitle: Text('address'),
+              )
+            ],
+
+          ),)
+        ],
+
       ),
     );
   }
