@@ -1,4 +1,4 @@
-import 'package:firebase_authentication_flutter/features/user_auth/presentation/pages/login_page.dart';
+ 
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,9 +12,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
-    Future.delayed(Duration(seconds: 0),
+    
+    Future.delayed(const Duration(seconds: 0),
     (){
+      // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> widget.child!), (route)=>false);
       
     }
@@ -26,9 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Appbar'),
+        title: const Text('Appbar'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('welcome to firebase',style: TextStyle(color: Colors.blue,fontWeight:  FontWeight.bold),),
       ), 
     );

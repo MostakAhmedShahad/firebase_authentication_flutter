@@ -14,9 +14,9 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final FirebaseAuthServices _auth = FirebaseAuthServices();
-  TextEditingController _nameEditingController = TextEditingController();
-  TextEditingController _emaiEditingController = TextEditingController();
-  TextEditingController _passwordEditingController = TextEditingController();
+   final _nameEditingController = TextEditingController();
+  final TextEditingController _emaiEditingController = TextEditingController();
+  final  _passwordEditingController = TextEditingController();
   bool isLoading = false;
 
   @override
@@ -29,11 +29,11 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void _signUp() async {
-    String username = _nameEditingController.text;
+    //String username = _nameEditingController.text;
     String email = _emaiEditingController.text;
     String password = _passwordEditingController.text;
     if (email.isEmpty || password.isEmpty) {
-      print("Email or password cannot be empty");
+      //print("Email or password cannot be empty");
       setState(() {
         isLoading = false;
       });
