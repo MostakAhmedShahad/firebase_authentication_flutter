@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,22 +18,12 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: GestureDetector(
-          onTap: () async {
-            final firestore = FirebaseFirestore.instance;
-            try {
-              await firestore
-                  .collection('users')
-                  .doc('1')
-                  .set({"username": "ahmed", "age": 23, "address": "Dhaka"});
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Data added successfully!')),
-              );
-            } catch (e) {
-              print("Error: $e");
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Failed to add data!')),
-              );
-            }
+          onTap: () {
+            _createData(UserModel(
+              username: "shahad",
+              age: 26,
+              address: "dhaka",
+            ));
           },
           child: Container(
             height: 200,
@@ -51,5 +42,38 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void _createData(UserModel userModel) {
+    final usercollection = FirebaseFirestore.instance.collection("users");
+    String id = usercollection.doc().id;
+    final newUser = UserModel(
+      username: userModel.username,
+      age: userModel.age,
+      address: userModel.address,
+      id: id,
+    ).toJson();
+    usercollection.doc(id).set(newUser);
+  }
+}
+
+class UserModel {
+  final String? username;
+  final String? address;
+  final int? age;
+  final String? id;
+  UserModel({this.id, this.username, this.address, this.age});
+  static UserModel formSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshor) {
+    return UserModel(
+      username: snapshor['username'],
+      address: snapshor['address'],
+      age: snapshor['age'],
+      id: snapshor['id'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {"username": username, "age": 21, "id": id, "address": address};
   }
 }
