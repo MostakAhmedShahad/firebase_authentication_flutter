@@ -19,10 +19,20 @@ class _HomePageState extends State<HomePage> {
         child: GestureDetector(
           onTap: () async {
             final firestore = FirebaseFirestore.instance;
-            await firestore
-                .collection('users')
-                .doc('1')
-                .set({"username": "ahmed", "age": "23", "address": "Dhaka"});
+            try {
+              await firestore
+                  .collection('users')
+                  .doc('1')
+                  .set({"username": "ahmed", "age": 23, "address": "Dhaka"});
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Data added successfully!')),
+              );
+            } catch (e) {
+              print("Error: $e");
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Failed to add data!')),
+              );
+            }
           },
           child: Container(
             height: 200,
