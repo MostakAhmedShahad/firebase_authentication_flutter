@@ -109,7 +109,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               _buildTextField(_nameController, "Username", Icons.person),
+              const SizedBox(height: 12),
               _buildTextField(_addressController, "Address", Icons.location_on),
+              const SizedBox(height: 12),
               _buildTextField(_ageController, "Age", Icons.cake, isNumber: true),
             ],
           ),
