@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('User Management', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         centerTitle: true,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.blue,
         elevation: 0,
       ),
       body: Padding(
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
               onPressed: () => _showUserForm(),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Colors.blue,
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
       keyboardType: isNumber ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: Colors.deepPurple),
+        prefixIcon: Icon(icon, color: Colors.blue),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
